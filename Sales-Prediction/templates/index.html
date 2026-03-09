@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sales Prediction</h1>
+    <p>Enter the day number to predict sales:</p>
+    <input type="number" id="dayInput" placeholder="Enter day number">
+    <button onclick="predictSales()">Predict</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function predictSales() {
+            const day = document.getElementById("dayInput").value;
+            if (!day) {
+                alert("Please enter a day number");
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/predict/${day}`);
+                const data = await response.json();
+                document.getElementById("result").innerText = 
+                    "Predicted Sales: " + data["Predicted Sales"].toFixed(2);
+            } catch (error) {
+                console.error(error);
+                document.getElementById("result").innerText = "Error fetching prediction";
+            }
+        }
+    </script>
+</body>
+</html>

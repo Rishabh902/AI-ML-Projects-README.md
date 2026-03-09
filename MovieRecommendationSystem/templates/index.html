@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            color: #555;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+
+        input[type="number"] {
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input[type="number"]::placeholder {
+            color: #aaa;
+        }
+
+        h4 {
+            color: #333;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-item label {
+            font-weight: 400;
+            color: #444;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        button[type="submit"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Custom number input styling */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🏠 House Price Prediction</h2>
+        <p class="subtitle">Enter property details to estimate the price</p>
+
+        <form action="/predict" method="post">
+            <div class="input-group">
+                <label for="median_income">Median Income</label>
+                <input type="number" step="any" id="median_income" name="median_income" placeholder="e.g., 3.5" required>
+            </div>
+
+            <div class="input-group">
+                <label for="housing_median_age">Housing Median Age</label>
+                <input type="number" step="any" id="housing_median_age" name="housing_median_age" placeholder="e.g., 15" required>
+            </div>
+
+            <div class="input-group">
+                <label for="total_rooms">Total Rooms</label>
+                <input type="number" step="any" id="total_rooms" name="total_rooms" placeholder="e.g., 500" required>
+            </div>
+
+            <div class="input-group">
+                <label for="total_bedrooms">Total Bedrooms</label>
+                <input type="number" step="any" id="total_bedrooms" name="total_bedrooms" placeholder="e.g., 100" required>
+            </div>
+
+            <div class="input-group">
+                <label for="population">Population</label>
+                <input type="number" step="any" id="population" name="population" placeholder="e.g., 1500" required>
+            </div>
+
+            <div class="input-group">
+                <label for="households">Households</label>
+                <input type="number" step="any" id="households" name="households" placeholder="e.g., 300" required>
+            </div>
+
+            <div class="input-group">
+                <label for="longitude">Longitude</label>
+                <input type="number" step="any" id="longitude" name="longitude" placeholder="e.g., -122.23" required>
+            </div>
+
+            <div class="input-group">
+                <label for="latitude">Latitude</label>
+                <input type="number" step="any" id="latitude" name="latitude" placeholder="e.g., 37.88" required>
+            </div>
+
+            <h4>Ocean Proximity</h4>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <label for="inland">INLAND</label>
+                    <input type="number" id="inland" name="inland" value="0" min="0" max="1">
+                </div>
+
+                <div class="checkbox-item">
+                    <label for="island">ISLAND</label>
+                    <input type="number" id="island" name="island" value="0" min="0" max="1">
+                </div>
+
+                <div class="checkbox-item">
+                    <label for="near_bay">NEAR BAY</label>
+                    <input type="number" id="near_bay" name="near_bay" value="0" min="0" max="1">
+                </div>
+
+                <div class="checkbox-item">
+                    <label for="near_ocean">NEAR OCEAN</label>
+                    <input type="number" id="near_ocean" name="near_ocean" value="0" min="0" max="1">
+                </div>
+            </div>
+
+            <button type="submit">Predict Price</button>
+        </form>
+    </div>
+</body>
+</html>

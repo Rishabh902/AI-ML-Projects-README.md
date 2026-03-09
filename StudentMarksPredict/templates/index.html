@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marks Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h2 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        label {
+            display: block;
+            color: #555;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        input[type="number"]:hover {
+            border-color: #b8c1ec;
+        }
+
+        /* Custom styling for number input arrows */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            opacity: 1;
+        }
+
+        .subject-icon {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            font-size: 20px;
+            opacity: 0.5;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 10px;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .header h2 {
+                font-size: 24px;
+            }
+
+            input[type="number"] {
+                padding: 12px 14px;
+            }
+
+            button {
+                padding: 14px;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon">🎓</div>
+            <h2>Student Performance Predictor</h2>
+            <p>Enter your marks to predict your overall performance score</p>
+        </div>
+
+        <div class="info-box">
+            💡 Enter marks between 0 and 100 for accurate predictions
+        </div>
+
+        <form action="/predict" method="post">
+            <div class="input-group">
+                <label for="science">🔬 Science</label>
+                <input type="number" id="science" name="science" min="0" max="100" step="0.01" required placeholder="Enter Science marks">
+                <span class="subject-icon">🧪</span>
+            </div>
+
+            <div class="input-group">
+                <label for="english">📚 English</label>
+                <input type="number" id="english" name="english" min="0" max="100" step="0.01" required placeholder="Enter English marks">
+                <span class="subject-icon">✍️</span>
+            </div>
+
+            <div class="input-group">
+                <label for="history">🏛️ History</label>
+                <input type="number" id="history" name="history" min="0" max="100" step="0.01" required placeholder="Enter History marks">
+                <span class="subject-icon">📜</span>
+            </div>
+
+            <div class="input-group">
+                <label for="maths">🔢 Maths</label>
+                <input type="number" id="maths" name="maths" min="0" max="100" step="0.01" required placeholder="Enter Maths marks">
+                <span class="subject-icon">➗</span>
+            </div>
+
+            <button type="submit">🚀 Predict Performance</button>
+        </form>
+    </div>
+
+    <script>
+        // Add smooth scroll and form validation
+        const form = document.querySelector('form');
+        const inputs = document.querySelectorAll('input[type="number"]');
+
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value < 0) this.value = 0;
+                if (this.value > 100) this.value = 100;
+            });
+
+            // Add animation on focus
+            input.addEventListener('focus', function() {
+                this.parentElement.querySelector('label').style.color = '#667eea';
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.querySelector('label').style.color = '#555';
+            });
+        });
+
+        form.addEventListener('submit', function(e) {
+            const button = this.querySelector('button');
+            button.innerHTML = '⏳ Predicting...';
+            button.disabled = true;
+        });
+    </script>
+</body>
+</html>

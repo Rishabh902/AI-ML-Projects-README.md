@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Recommendation System 🎬</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            background:#121212;
+            color:white;
+            text-align:center;
+            padding-top:100px;
+        }
+
+        h1{
+            color:#ff4c4c;
+        }
+
+        input{
+            padding:10px;
+            width:300px;
+            border-radius:5px;
+            border:none;
+            font-size:16px;
+        }
+
+        button{
+            padding:10px 20px;
+            background:#ff4c4c;
+            border:none;
+            color:white;
+            font-size:16px;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#ff2a2a;
+        }
+
+        #result{
+            margin-top:30px;
+            font-size:18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🎬 Movie Recommendation System</h1>
+
+<input type="text" id="movie" placeholder="Enter Movie Name">
+<button onclick="recommendMovie()">Recommend</button>
+
+<div id="result"></div>
+<script>
+
+async function recommendMovie(){
+
+    let movie = document.getElementById("movie").value;
+
+    let response = await fetch("/recommend",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            movie: movie
+        })
+    });
+
+    let data = await response.json();
+
+    let resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = "<h3>Recommended Movies:</h3>";
+
+    data.recommendations.forEach(function(m){
+        resultDiv.innerHTML += "<p>"+ m +"</p>";
+    });
+
+}
+
+</script>
+</body>
+</html>
